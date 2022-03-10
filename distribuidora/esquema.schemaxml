@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">distribuidora_mayorista</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="ciudad_sucursal" view="colnames">
+<left>393</left>
+<top>60</top>
+<width>154</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `ciudad_sucursal` (
+  `id_ciudad_sucursal` int(11) NOT NULL AUTO_INCREMENT,
+  `id_departamento` int(11) NOT NULL,
+  `descripcion` varchar(500) NOT NULL,
+  PRIMARY KEY (`id_ciudad_sucursal`),
+  KEY `id_departamento` (`id_departamento`),
+  CONSTRAINT `ciudad_sucursal_ibfk_1` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="cliente" view="colnames">
+<left>921</left>
+<top>73</top>
+<width>200</width>
+<height>214</height>
+<sql_create_table>CREATE TABLE `cliente` (
+  `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tipo_identificacion` int(11) NOT NULL,
+  `primer_nombre` varchar(50) NOT NULL,
+  `segundo_nombre` varchar(50) DEFAULT NULL,
+  `primer_apellido` varchar(50) NOT NULL,
+  `segundo_apellido` varchar(50) DEFAULT NULL,
+  `numero_contacto_principal` varchar(50) NOT NULL,
+  `numero_identificacion` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_cliente`),
+  KEY `id_tipo_identificacion` (`id_tipo_identificacion`),
+  CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_tipo_identificacion`) REFERENCES `tipo_identificacion` (`id_tipo_identificacion`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="departamentos" view="colnames">
+<left>177</left>
+<top>61</top>
+<width>143</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `departamentos` (
+  `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pais` int(11) NOT NULL,
+  `departamento` varchar(500) NOT NULL,
+  PRIMARY KEY (`id_departamento`),
+  KEY `id_pais` (`id_pais`),
+  CONSTRAINT `departamentos_ibfk_1` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`)
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="pais" view="colnames">
+<left>65</left>
+<top>283</top>
+<width>86</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `pais` (
+  `id_pais` int(11) NOT NULL AUTO_INCREMENT,
+  `pais` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_pais`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="personal" view="colnames">
+<left>701</left>
+<top>342</top>
+<width>112</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `personal` (
+  `id_personal` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_personal`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="personal_departamento" view="colnames">
+<left>344</left>
+<top>338</top>
+<width>199</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `personal_departamento` (
+  `id_personal_departamento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_departamento` int(11) NOT NULL,
+  `id_personal` int(11) NOT NULL,
+  PRIMARY KEY (`id_personal_departamento`),
+  KEY `id_personal` (`id_personal`),
+  KEY `id_departamento` (`id_departamento`),
+  CONSTRAINT `personal_departamento_ibfk_1` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`),
+  CONSTRAINT `personal_departamento_ibfk_2` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sucursales" view="colnames">
+<left>643</left>
+<top>52</top>
+<width>157</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `sucursales` (
+  `id_sucursales` int(11) DEFAULT NULL,
+  `id_ciudad_sucursal` int(11) DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `nombre_encargado` varchar(255) DEFAULT NULL,
+  `numero_contacto` double DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  KEY `id_ciudad_sucursal` (`id_ciudad_sucursal`),
+  KEY `id_cliente` (`id_cliente`),
+  CONSTRAINT `sucursales_ibfk_1` FOREIGN KEY (`id_ciudad_sucursal`) REFERENCES `ciudad_sucursal` (`id_ciudad_sucursal`),
+  CONSTRAINT `sucursales_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tipo_identificacion" view="colnames">
+<left>1133</left>
+<top>419</top>
+<width>165</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tipo_identificacion` (
+  `id_tipo_identificacion` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_tipo_identificacion`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
